@@ -1,0 +1,243 @@
+/* ---------------------------------------------------------
+# START CONFIGURATION
+--------------------------------------------------------- */
+html,
+body {
+    height: 120vh;
+    margin: 0;
+    max-width: 100%;
+}
+a {
+    text-decoration: none;
+}
+
+/* ---------------------------------------------------------
+# NAV-BAR CONFIGURATION
+--------------------------------------------------------- */
+#btn-nav {
+    width: 90px;
+    float: right;
+    margin-right: 25px;
+}
+#nav-content {
+    text-align: center; 
+    color: #fff; 
+    margin-left: 25px; 
+    font-size: 18px;
+}
+
+/* ---------------------------------------------------------
+# FOOTER CONFIGURATION
+--------------------------------------------------------- */
+.wrapper {
+    min-height: 100%;
+    margin-bottom: -50px;
+}
+
+#footer,
+.push {
+    height: 50px;
+    font-size: 13px;
+}
+
+/* ---------------------------------------------------------
+# LOGIN CONFIGURATION
+--------------------------------------------------------- */
+#btn-enter {
+    width: 90px;
+}
+#heart {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+}
+.icon-width{
+    width: 45px;
+}
+
+/* ---------------------------------------------------------
+# BACKEND CONFIGURATION
+--------------------------------------------------------- */
+.side-label {
+    width: 70px;
+}
+
+#no-data {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+}
+
+/* Pagination  */
+#first, #last {
+    width: 60px; 
+    border-radius: 1px;
+    border: 1px solid #d3d3d3;
+}
+/* ---------------------------------------------------------
+# SWEETALERT CONFIGURATION 
+--------------------------------------------------------- */
+/* All contents center */
+.swal-text {
+    text-align: center;
+}
+
+/* Icon setting */
+.swal-icon--success:before,
+.swal-icon--success:after,
+.swal-icon--success__hide-corners {
+    background: none !important;
+}
+
+/* Ring color and color animation  */
+.swal-icon--success {
+    border-color: #007bff;
+} 
+
+.swal-icon--success__line {
+    background-color: #007bff;
+}
+
+/* Button settings  */
+.swal-button {
+    padding: 7px 19px;
+    border-radius: 5px;
+    background-color: #007bff;
+    font-size: 12px;
+    border: 1px solid #007bff;
+}
+
+/* Remove box shadow  */
+.swal-button:focus {
+    box-shadow: none;
+}
+.swal-button:not([disabled]):hover {
+    background: transparent;
+    color: #111;
+    border: 1px solid #007bff;
+}
+
+/* ---------------------------------------------------------
+# RESPONSIVE - RESOLUTION FOR TABLET (1024PX)
+--------------------------------------------------------- */
+@media (max-width: 1024px) {
+    /* TABLE  */
+    .table thead {
+        display: none;
+    }
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+    .table tr {
+        margin-bottom: 15px;
+        border: 1px solid #111;
+        border-radius: 5px;
+    }
+    .table td {
+        text-align: right;
+        padding-left: 35%;
+        position: relative;
+        border: 1px solid transparent;
+    }
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+    }
+    .table > thead > tr:first-child {
+        display: none;
+        margin-top: 5px;
+    }
+    #responsive-border {
+        border: 1px solid #a9a9a9;
+    }
+    #top-table {
+        background-color: #cfe2ff;
+        color: #111;
+        font-weight: bold;
+        text-align: right !important;
+    }
+    #btn-nav {
+        width: 75px;
+    }
+    #footer {
+        font-size: 12px;
+    }
+}
+
+/* ---------------------------------------------------------
+# RESPONSIVE - RESOLUTION FOR TABLET (500PX)
+--------------------------------------------------------- */
+@media (max-width: 500px) {
+    /* To hide the content all right at the footer  */
+    #all-rights {
+        display: none;
+    }
+    /* Footer styling  */
+    #footer {
+        font-size: 10px;
+    }
+    /* Button in nav-bar  */
+    #btn-nav {
+        width: 65px;
+        font-size: 12px;
+        margin-right: 15px;
+    }
+    #nav-content {
+        font-size: 15px;
+        margin-left: 15px;
+    }
+    /* Heart  */
+    #heart {
+        font-size: 12px;
+    }
+    #btn-enter {
+        width: 100%;
+        border-radius: 30px;
+    }
+    /* Global font size of 12px  */
+    .txt-sm {
+        font-size: 12px;
+    }
+    .icon-width {
+        font-size: 12px;
+    }
+    #clock {
+        display: none;
+    }
+    #add {
+        display: none;
+    }
+
+    /* Input tags  */
+    #name, #phone, #email, #age, #gender {
+        font-size: 12px;
+    }
+    /* SweetAlert  */
+    .swal-text {
+        font-size: 14px;
+    }
+    .swal-button {
+        padding: 5px 15px;
+        font-size: 10px;
+    }
+    .swal-icon {
+        font-size: 80px;
+    }
+    #first, #last {
+        width: 40px;
+        font-size: 12px;
+        text-align: center;
+    }
+}

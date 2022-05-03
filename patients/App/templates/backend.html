@@ -1,0 +1,168 @@
+<!-- Extend contents from base.html  -->
+{% extends 'base.html' %}
+
+ <!-- =============== Title Page ===================== -->
+ {% block title %}All Patients{% endblock title %}
+
+ <!-- =============== Block NavBar ===================== -->
+ <!-- Nav-bar content (Icon and Title)  -->
+ {% block nav-content %}
+ <i class="fas fa-hospital-user"></i>&nbsp;&nbsp; Patients
+ {% endblock nav-content %}
+
+ <!-- Show Realtime session of time  -->
+ {% block time %}
+ <div class="col-sm">
+   <center>
+     <span id="clock" style="color: #89cff0;"></span>
+   </center>
+ </div>
+{% endblock time %}
+
+ <!-- Nav-bar button  -->
+{% block btn-nav %}
+    <!-- The logout url is a django function that is declared in settings -->
+    <a class="btn btn-outline-info btn-sm border-light text-light" id="btn-nav" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
+{% endblock btn-nav %}
+
+<!-- Footer Content color  -->
+{% block footer %} style="color: #a9a9a9;" {% endblock footer %}
+
+ <!-- =============== Block Content (ROOT) ===================== -->
+ {% block content %}
+   <div class="container">
+     <br><br>
+
+     <!-- Add button and Get username from backend  -->
+     <div class="d-flex justify-content-between txt-sm">
+       <a href="{% url 'addpatient' %}" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus"><span id="add">&nbsp;&nbsp; Add Patient</span></i></a>
+       <span>
+         Welcome: <strong><span class="text-primary">{{ user.get_username.title }}</span></strong>
+       </span>
+     </div>
+
+     
+
+     <!-- Search bar and Refresh page button  -->
+     <form>
+       <div class="input-group input-group-sm mb-3 mt-4">
+         <input type="text" name="q" class="form-control" placeholder="Search for ..." value="{{ request.GET.q }}">
+         <button class="btn btn-secondary"><i class="fas fa-search"></i></button>
+         <a href="{% url 'backend' %}" class="btn btn-dark" style="margin-left: 2px;"><i class="fas fa-sync-alt"></i></a>
+       </div>
+     </form>
+
+     <!-- Tabel layout from admin page  -->
+     <center>
+       <table class="table table-bordered table-sm mt-4" style="text-align: center; font-size: 14px;">
+        <thead class="table-primary">
+          <tr>
+            <td style="width: 21%;">Name</td>
+            <td style="width: 15%;">Phone</td>
+            <td style="width: 21%;">Email</td>
+            <td style="width: 8%;">Age</td>
+            <td style="width: 7%;">Registered</td>
+            <td style="width: 18%;">Gender</td>
+            <td  style="width: 10%;" colspan="2">Actions</td>
+          </tr>
+        </thead>
+        <!-- Table content  -->
+        <tbody>
+            <!-- Data from backend  -->
+            {% for patient in patients %}
+            <tr id="chk_td">
+              <td data-label="Name"  style="text-align: left;" id="top-table">{{ patient.name }}</td>
+              <td data-label="Phone"  style="text-align: right;" id="responsive-border">{{ patient.phone }}</td>
+              <td data-label="Email"  style="text-align: right;" id="responsive-border">{{ patient.email }}</td>
+              <td data-label="Age" id="responsive-border">{{ patient.age }}</td>
+              <td data-label="Gender" id="responsive-border">{{ patient.gender }}</td>
+              <td data-label="Date Created" id="responsive-border">{{ patient.created_at | date:'m/d/Y (H:i)' }}</td>
+              <td>
+                <a href="/patient/{{ patient.id }}" class="btn btn-sm btn-primary" title="Edit patient">
+                  <i class="fas fa-pen"></i>
+                </a>
+              </td>
+              <td>
+                <a class="btn btn-sm btn-danger" title="Delete patient" data-bs-toggle="modal" data-bs-target="#deleteModal{{ patient.pk }}">
+                  <i class="fas fa-trash-alt"></i>
+                </a>
+              </td>
+            </tr>
+
+             <!-- Modal (delete Confirmation) -->
+            <div class="modal fade" id="deleteModal{{ patient.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp; Delete Patient</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body txt-sm">
+                    <div class="text-center text-danger"><i class="fas fa-times-circle fa-5x mb-4 mt-2"></i></div>
+                    <div class="text-center text-danger">
+                      <span>DO YOU WANT TO DELETE THIS PATIENT ??</span>
+                      <div class="text-dark mt-3 mb-2">Patient: <strong>{{ patient.name }}</strong></div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                    <a href="/deletepatient/{{ patient.id }}" type="button" class="btn btn-outline-danger btn-sm">Delete</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% endfor %}
+        </tbody>
+      </table>
+     </center>
+
+     <!-- Pagination Templates  -->
+     <nav class="mt-4 txt-sm">
+       {% if patients.has_other_pages %}
+          <ul class="pagination justify-content">
+            {% if patients.has_previous %}
+              <a href="?page=1" class="btn btn-outline-primary mb-4"  id="first">First</a>
+              <li class="page-item"><a href="?page={{ patients.previous_page_number }}" class="page-link"><i class="fas fa-angle-double-left"></i></a></li>
+
+            {% else %}
+              <li class="page-item disabled"></li>
+            {% endif %}
+
+            <!-- Loop for each page  -->
+            {% for i in patients.paginator.page_range %}
+                {% if patients.number == i %}
+                  <li class="page-item active"><span class="page-link">{{ i }}<span class="sr-only"></span></span></li>
+                {% else %}
+                  <li class="page-item"><a href="?page={{ i }}" class="page-link"> {{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            <!-- Next page conditions  -->
+            {% if patients.has_next %}
+              <li class="oage-item"><a href="?page={{ patients.next_page_number }}" class="page-link"><i class="fas fa-angle-double-right"></i></a></li>
+              <a href="?page={{ patients.paginator.num_pages }}" class="btn btn-outline-primary mb-4" style="border-left: none;" id="last">Last</a>
+            {% else %}
+              <li class="page-item disabled"></li>
+            {% endif %}
+          </ul>
+       {% endif %}
+     </nav>
+     <!-- Return success message when patient is added successfully -->
+     {% for message in messages %}
+        {% if message.tags == 'success' %}
+          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+          <script>
+              var context = "{{ message }}";
+              swal("Perfect!", context, "success")
+          </script>
+        {% endif %}
+     {% endfor %}
+      
+   </div>
+
+   <!-- If data is not found, it should show the message  -->
+   <span class="text-danger" id="no-data"></span>
+
+   <br><br><br>
+ {% endblock content %}

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+<!-- =============== Title Page ===================== -->
+{% block title %}Add Patient{% endblock title %}
+
+<!-- =============== Block NavBar ===================== -->
+<!-- Nav-bar content (Icon and Title)  -->
+{% block nav-content %}
+<i class="fas fa-user-plus"></i>&nbsp;&nbsp; Add Patient
+{% endblock nav-content %}
+
+ <!-- Nav-bar button  -->
+ {% block btn-nav %}
+ <!-- The logout url is a django function that is declared in settings -->
+ <a class="btn btn-outline-info btn-sm border-light text-light" id="btn-nav" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
+{% endblock btn-nav %}
+
+<!-- Show Realtime session of time  -->
+{% block time %}
+<div class="col-sm">
+  <center>
+    <span id="clock" style="color: #89cff0;"></span>
+  </center>
+</div>
+{% endblock time %}
+
+<!-- Footer Content color  -->
+{% block footer %} style="color: #a9a9a9;" {% endblock footer %}
+
+<!-- =============== Block Content (ROOT) ===================== -->
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card card-body border-dark text-primary mt-5">
+                    <span class="text center txt-sm"> {% block card %} FILL OUT THE FORM BELOW {% endblock card %} </span>
+                </div>
+                <form {% block Action %} action="/addpatient" {% endblock Action %} method="POST" autocomplete="off" enctype="multipart/form-data" class="card p-3 border-dark mt-3">
+                    {% csrf_token %}
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text side-label"><span class="txt-sm">Name</span></span>
+                        <input type="text" name="name" class="form-control" maxlength="40" id="name" placeholder="First and Last name" {% block valueName %}{% endblock valueName %}>
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text side-label"><span class="txt-sm">Phone</span></span>
+                        <input type="text" name="phone" class="form-control" id="phone" placeholder="Patient contact" {% block valuePhone %}{% endblock valuePhone %}>
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text side-label"><span class="txt-sm">Email</span></span>
+                        <input type="text" name="email" class="form-control" maxlength="40" id="email" placeholder="Patient email address" {% block valueEmail %}{% endblock valueEmail %}>
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text side-label"><span class="txt-sm">Age</span></span>
+                        <input type="text" name="age" class="form-control" maxlength="3" id="age" placeholder="Patient age" {% block valueAge %}{% endblock valueAge %}>
+                    </div>
+                    <div class="input-group input-group-sm mb-3 txt-sm">
+                        <label class="input-group-text side-label"><span class="txt-sm">Gender</span></label>
+                        <select class="form-select" name="gender" id="gender">
+                            {% block option %}
+                            <option value="" hidden>Select the gender</option>
+                            {% endblock option %}
+                            <option disables></option>
+                            <option>M</option>
+                            <option>F</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="note" id="" rows="7" class="form-control txt-sm" placeholder="Description is optional">{% block note %}{% endblock note %}</textarea>
+                    </div>
+                    <div class="d-grid gap-2 mt-2 txt-sm">
+                        <button type="submit" class="btn btn-primary btn-sm txt-sm" id="btn-add">
+                            {% block add %}
+                            <i class="fas fa-plus"></i>&nbsp;&nbsp; Add 
+                            {% endblock add %}
+                        </button>
+
+                        <!-- Add reset button (edit.html) but denied here  -->
+                        {% block reset-button %}{% endblock reset-button %}
+
+                        <a href="{% url 'backend' %}" class="btn btn-dark btn-sm txt-sm"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp; Back</a>
+                    </div>
+
+                    <!-- ID Hidden (denied here)  -->
+                    {% block id-hidden %}{% endblock id-hidden %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
