@@ -1,13 +1,13 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.cache import cache_control
+from django.contrib.auth.decorators import login_required # To secure the backend
+from django.views.decorators.cache import cache_control # To clear the login registry after user logout
 
 # My imports
-from App.models import Patient
-from django.contrib import messages
-from django.http import HttpResponseRedirect
-from django.db.models import Q
-from django.core.paginator import Paginator
+from App.models import Patient # Import the class patient from app.models
+from django.contrib import messages # import the messages from contrib
+from django.http import HttpResponseRedirect # To redirect the webpages
+from django.db.models import Q # This allows us to query the db
+from django.core.paginator import Paginator # To paginate the items
 
 # Function to render the frontend
 def frontend(request):
